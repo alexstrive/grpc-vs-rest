@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+package covid_stats;
+
+service CovidStats {
+    rpc GetAll (EmptyResponse) returns (stream StatEntry);
+    rpc GetAllAsList (EmptyResponse) returns (StatEntryList);
+}
+
+message EmptyResponse {
+}
+
+message StatEntryList {
+    repeated StatEntry entries = 1;
+}
+
+message StatEntry {
+    string dateRep = 1;
+    uint32 day = 2;
+    uint32 month = 3;
+    uint32 year = 4;
+    uint64 cases = 5;
+    uint64 deaths = 6;
+    string countriesAndTerritories = 7;
+    uint64 popData2020 = 8;
+    string geo_id = 9;
+    string countryterritoryCode = 10;
+    string continentExp = 11;
+}
