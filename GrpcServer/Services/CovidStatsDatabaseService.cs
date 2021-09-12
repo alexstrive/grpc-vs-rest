@@ -11,8 +11,9 @@ namespace GrpcServer
  
     public class CovidStatsDatabaseService
     {
-        public IEnumerable<CovidStatsEntry> Entries { get; init; }
-        
+        public IEnumerable<CovidStatsEntry> Entries { get; }
+        public StatEntryList GrpcEntries { get; }
+
         public CovidStatsDatabaseService()
         {
             using (var reader = new StreamReader("data/covid-europe.csv"))
@@ -20,6 +21,27 @@ namespace GrpcServer
             {
                 Entries = csv.GetRecords<CovidStatsEntry>().ToList();
             }
+
+            GrpcEntries = new StatEntryList
+            {
+                Entries =
+                {
+                    Entries.Select(covidStatsEntry => new StatEntry()
+                    {
+                        Cases = covidStatsEntry.cases,
+                        Day = covidStatsEntry.day,
+                        Deaths = covidStatsEntry.deaths,
+                        Month = covidStatsEntry.month,
+                        Year = covidStatsEntry.year,
+                        DateRep = covidStatsEntry.dateRep,
+                        PopData2020 = covidStatsEntry.popData2020,
+                        CountriesAndTerritories = covidStatsEntry.countryterritoryCode,
+                        ContinentExp = covidStatsEntry.continentExp,
+                        CountryterritoryCode = covidStatsEntry.countryterritoryCode,
+                        GeoId = covidStatsEntry.geoId
+                    })
+                }
+            };
         }
     }
 

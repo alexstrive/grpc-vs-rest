@@ -21,7 +21,6 @@ namespace GrpcServer.Controllers
         [Route("")]
         public IEnumerable<CovidStatsEntry> GetAll()
         {
-            _logger.LogCritical("Hello");
             return _db.Entries;
         }
     }

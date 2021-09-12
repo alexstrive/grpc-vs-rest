@@ -43,20 +43,7 @@ namespace GrpcServer
 
         public override async Task<StatEntryList> GetAllAsList(EmptyResponse request, ServerCallContext context)
         {
-            return new StatEntryList {Entries = { _db.Entries.Select(covidStatsEntry => new StatEntry()
-            {
-                Cases = covidStatsEntry.cases,
-                Day = covidStatsEntry.day,
-                Deaths = covidStatsEntry.deaths,
-                Month = covidStatsEntry.month,
-                Year = covidStatsEntry.year,
-                DateRep = covidStatsEntry.dateRep,
-                PopData2020 = covidStatsEntry.popData2020,
-                CountriesAndTerritories = covidStatsEntry.countryterritoryCode,
-                ContinentExp = covidStatsEntry.continentExp,
-                CountryterritoryCode = covidStatsEntry.countryterritoryCode,
-                GeoId = covidStatsEntry.geoId
-            }) }};
+            return _db.GrpcEntries;
         }
     }
 }
